@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table{
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        th, td{
+            padding: 10px 20px;
+            border: 1px solid #000;
+        }
+        tr:nth-child(2) input {
+            height: 400px; /* 设置输入框的高度为 40 像素 */
+            white-space: normal;
+        }
+        
+    </style>
+
+</head>
+<body id="body">
+  <form action="/submit" method="post">
+    <table width="75%" style="height: 300px; margin-bottom: 1em; margin-top: 1em;" id = "demoTable">
+        <tr>
+          <td style="background-color: aliceblue;">
+            新聞id
+          </td>
+          <td>
+            <input style="width: 75%;" type="text" name="news_id" />
+          </td>
+        </tr>
+        <tr style="height: 300px;">
+            <td style="background-color: aliceblue;">
+              新聞內文
+            </td>
+            <td >
+              <textarea rows="27" cols="75" type="text" name="context" ></textarea>
+            </td>
+        </tr>
+    </table>
+    <!-- <button id="send">開始生成</button> -->
+    <input type="submit" value="開始生成" style="height: 35px;" />
+  </form>
+
+    <!-- <script src="script.js"></script>   -->
+</body>
+</html>

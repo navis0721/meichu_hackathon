@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV 文件讀取和創建 Square 元素</title>
+    <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+        
+        .titleClass{
+            font-size: 28px;
+            font-family: "cwTeXYen", sans-serif;
+            color: black;
+            font-weight: bold;
+            padding-bottom: 1em;
+        }
+        .contentClass{
+            font-size: 16px;
+            font-family: "cwTeXYen", sans-serif;
+            color: black;
+        }
+        #squareContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center; 
+        }
+        .square {
+            width: 300px;
+            height: 300px;
+            display: none; 
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+        }
+        .text-area {
+            width: 90%;
+            height: 90%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* .titleClass {
+            font-size: 28px;
+            font-family: "cwTeXYen", sans-serif;
+            color: black;
+            text-align: center;
+        }
+
+        .contentClass {
+            font-size: 16px; 
+            font-family: "cwTeXYen", sans-serif;
+            color: #333;
+            text-align: center;
+        }
+
+        #squareContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            text-align: center; 
+        }
+
+        .square {
+            width: 300px;
+            height: 300px;
+            background-color: #f5f5f5; 
+            display: none;
+            border: 1px solid #ddd; 
+            box-shadow: 0px 0px 10px 0px #ccc; 
+            text-align: center;
+        }
+
+        .text-area {
+            width: 90%;
+            height: 90%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        } */
+    </style>
+</head>
+<body>
+    <input type="file" id="csvFileInput" accept=".csv">
+    <button id="createSquaresButton">創建 Square 元素</button>
+    <div id="squareContainer"></div>
+    <script>
+        // console.log(datas);
+        document.getElementById("createSquaresButton").addEventListener("click", function() {
+            const input = document.getElementById("csvFileInput");
+            const squareContainer = document.getElementById("squareContainer");
+
+            if (input.files.length === 0) {
+                alert("請選擇一個CSV文件");
+                return;
+            }
+
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const rows = content.split('\n');
+
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].split(',');
+
+                    if (row.length >= 3) {
+                        const id = row[0];
+                        const title = row[1];
+                        const content = row[2];
+
+                        const square = createSquare(id, title, content);
+                        setRandomColor(square);
+                        squareContainer.appendChild(square);
+                    }
+                }
+            };
+
+            reader.readAsText(file);
+        });
+
+        function createSquare(id, title, content) {
+            const square = document.createElement("div");
+            square.className = "square";
+
+            const textArea = document.createElement("div");
+            textArea.className = "text-area";
+
+            const titleDiv = document.createElement("div");
+            titleDiv.classList.add("titleClass");
+            titleDiv.innerText = title;
+
+            const contentDiv = document.createElement("div");
+            contentDiv.classList.add("contentClass");
+            contentDiv.innerText = content;
+            
+            square.appendChild(textArea);
+            textArea.appendChild(titleDiv);
+            // square.appendChild();
+            textArea.appendChild(contentDiv);
+            
+            return square;
+        }
+        function setRandomColor(element) {
+            const randomColor = getRandomColor();
+            element.style.backgroundColor = randomColor;
+        }
+
+        function getRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
